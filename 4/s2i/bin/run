@@ -15,7 +15,7 @@ run_node() {
     exec nodemon --debug="$DEBUG_PORT"
   else
     echo "Launching via npm..."
-    exec npm run -d $NPM_RUN
+    exec npm run serve:prod
   fi
 } 
 
