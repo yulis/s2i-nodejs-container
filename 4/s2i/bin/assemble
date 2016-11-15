@@ -54,8 +54,11 @@ npm run test
 npm run lint
 cp scripts/docker/run.sh .
 chmod +x run.sh
-rm package.json
+mv package.json package.json.original
 cp .deps.json package.json
+npm install --production
+rm package.json
+mv package.json.original package.json
 
 # Fix source directory permissions
 fix-permissions ./
