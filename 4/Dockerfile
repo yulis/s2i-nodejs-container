@@ -17,17 +17,19 @@ ENV NODEJS_VERSION=4 \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
     PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH
 
-LABEL summary="Platform for building and running Node.js 4 applications" \
-      io.k8s.description="Platform for building and running Node.js 4 applications" \
-      io.k8s.display-name="Node.js 4" \
+LABEL summary="Platform for building and running Node.js 5 applications" \
+      io.k8s.description="Platform for building and running Node.js 5 applications" \
+      io.k8s.display-name="Node.js 5" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,nodejs,nodejs4" \
+      io.openshift.tags="builder,nodejs,nodejs5" \
       com.redhat.dev-mode="DEV_MODE:false" \
       com.redhat.deployments-dir="/opt/app-root/src" \
       com.redhat.dev-mode.port="DEBUG_PORT:5858"
+      
+RUN rpm -Uvh https://rpm.nodesource.com/pub_5.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
 
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="rh-nodejs4 rh-nodejs4-npm rh-nodejs4-nodejs-nodemon nss_wrapper" && \
+    INSTALL_PKGS="nodejs nss_wrapper" && \
     ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \

@@ -78,9 +78,9 @@ for dir in ${dirs}; do
 
   IMAGE_NAME="${NAMESPACE}${BASE_IMAGE_NAME}-${dir//./}-${OS}"
 
-  if [[ -v TEST_MODE ]]; then
-    IMAGE_NAME+="-candidate"
-  fi
+  # if [[ -v TEST_MODE ]]; then
+  #   IMAGE_NAME+="-candidate"
+  # fi
 
   echo "-> Building ${IMAGE_NAME} ..."
 
@@ -91,19 +91,19 @@ for dir in ${dirs}; do
     docker_build_with_version Dockerfile
   fi
 
-  if [[ -v TEST_MODE ]]; then
-    IMAGE_NAME=${IMAGE_NAME} test/run
-
-    if [[ $? -eq 0 ]] && [[ "${TAG_ON_SUCCESS}" == "true" ]]; then
-      echo "-> Re-tagging ${IMAGE_NAME} image to ${IMAGE_NAME%"-candidate"}"
-      docker tag $IMAGE_NAME ${IMAGE_NAME%"-candidate"}
-    fi
-
-    if [[ ! -z "${REGISTRY}" ]]; then
-      echo "-> Tagging image as" ${REGISTRY}/${IMAGE_NAME%"-candidate"}
-      docker tag $IMAGE_NAME ${REGISTRY}/${IMAGE_NAME%"-candidate"}
-    fi
-  fi
+  # if [[ -v TEST_MODE ]]; then
+  #   IMAGE_NAME=${IMAGE_NAME} test/run
+  # 
+  #   if [[ $? -eq 0 ]] && [[ "${TAG_ON_SUCCESS}" == "true" ]]; then
+  #     echo "-> Re-tagging ${IMAGE_NAME} image to ${IMAGE_NAME%"-candidate"}"
+  #     docker tag $IMAGE_NAME ${IMAGE_NAME%"-candidate"}
+  #   fi
+  # 
+  #   if [[ ! -z "${REGISTRY}" ]]; then
+  #     echo "-> Tagging image as" ${REGISTRY}/${IMAGE_NAME%"-candidate"}
+  #     docker tag $IMAGE_NAME ${REGISTRY}/${IMAGE_NAME%"-candidate"}
+  #   fi
+  # fi
 
   popd > /dev/null
 done

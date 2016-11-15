@@ -49,6 +49,13 @@ fi
 
 echo "---> Building your Node application from source"
 npm install
+npm run build:prod
+npm run test
+npm run lint
+cp scripts/docker/run.sh .
+chmod +x run.sh
+rm package.json
+cp .deps.json package.json
 
 # Fix source directory permissions
 fix-permissions ./
